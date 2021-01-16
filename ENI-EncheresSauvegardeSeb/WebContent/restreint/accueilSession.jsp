@@ -37,7 +37,8 @@
 
 
  <div class="col-sm-12">
-        <h2>Liste des enchères</h2>          
+        <h2>Liste des enchères</h2>    
+           
     </div>
             
       <div class="container">
@@ -70,6 +71,8 @@
                             </select>
                         </div>
                         <!--  par défaut, case encheres ouvertes selectionnée -->
+                        <!-- j'ai mis des boutons radios et pas checkbox car pas le temps de gérer les différentes requêtes -->
+                        <!--  pouvant être choises avec les choix mutilples des checkbox -->
                         
 							<fieldset>
 								<legend>
@@ -116,7 +119,7 @@
             </div>
             </form>
           </div>
-         
+        
 		         
           
  
@@ -126,7 +129,21 @@
 
 	<c:set var="i" value="${1}"/>
 		<c:forEach var="art" items="${listeArticles}"  >
-		<li><a href="ActionArticle?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a>
+		
+		
+		<li>
+		
+		 <!-- JSTL qui permet dans le même affichage d'afficher plusieurs versions différentes des boutons et fonctionnalités -->   
+		<%--quand bouton achats selectionné renvoie sur feuille enchere.jsp  --%>
+			<c:if test="${valeurBouton eq 'encheres' }">
+				<a href="ActionArticle?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a>
+			</c:if>
+		<%--quand bouton ventes selectionne renvoie sur feuille nouvelleVenteJsp --%>
+			<c:if test="${valeurBouton eq 'ventes' }">
+				<a href="Consultation?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a>
+			</c:if>
+			
+		<%--<a href="ActionArticle?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a> --%>
 		<p>Prix : ${art.prixVente} points</p>
 		<p>Fin de l'enchère : ${art.dateFinEnchere}</p>
 		<p>idUser Article : ${art.idUser }</p> 

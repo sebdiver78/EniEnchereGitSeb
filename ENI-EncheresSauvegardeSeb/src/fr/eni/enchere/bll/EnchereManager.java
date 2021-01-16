@@ -80,7 +80,7 @@ public ArticleManager articleManager;
 		
 		
 		System.out.println("************ENCHERE MANAGER INSERTION***********");
-		System.out.println("Enchere = "+ enchere.toString());
+		//System.out.println("Enchere = "+ enchere.toString());
 		try {
 			
 			
@@ -212,14 +212,14 @@ public ArticleManager articleManager;
 		//encheres remportées=listeEncheres avec idUserSession et dont article.getDateFinEnchere>NOW
 		// valeur bouton ouverte enchereEnCours remportees
 		if (bouton.equals("ouverte")) {
-			System.out.println("OUVERTE");
+			System.out.println("ench OUVERTE");
 			for (Article e: listeEncheresATrier) {
 				if ((utilisateurSession.getNoUtilisateur() != e.getIdUser()) && (utilisateurSession.getNoUtilisateur() != e.getEnchere().getNoUtilisateur()) && (e.getDateDebutEnchere().compareTo(LocalDate.now()) < 1) && (e.getDateFinEnchere().compareTo(LocalDate.now())>1)) {
 					listeEnchereTriee.add(e);
 				}
 			}
 		} else if (bouton.equals("enchereEnCours")) {
-			System.out.println("EN COURS");
+			System.out.println("ench EN COURS");
 			//enchere en cours: enchères pour lesquelles on a une fiche enchère existante 
 			// donc une fiche enchère avec idUser=idUserSession et dont la date de début est avant NOW 
 			//et date de fin après now (déjà commencée pas encore finie
@@ -233,7 +233,7 @@ public ArticleManager articleManager;
 		} else if (bouton.equals("remportees")) {
 			//encheres remportées: enchères pour lesquelles on a une fiche enchère existante
 			// dont date début est avant NOW et date de fin avant NOW aussi donc enchères finies
-			System.out.println("REMPORTEES");
+			System.out.println("ench REMPORTEES");
 			System.out.println("idUSER = " + utilisateurSession.getNoUtilisateur());
 			for (Article e :listeEncheresATrier) {
 				if ( (e.getEnchere().getNoUtilisateur() == utilisateurSession.getNoUtilisateur()) && (e.getDateDebutEnchere().compareTo(LocalDate.now()) < 1) && (e.getDateFinEnchere().compareTo(LocalDate.now())<1) ) {
@@ -244,7 +244,7 @@ public ArticleManager articleManager;
 			}
 		}
 		listeEnchereTriee = filtreEncheres(idCat, filtre, listeEnchereTriee);
-		System.out.println("listeENCHERETRIEES = " + listeEnchereTriee.toString());
+		System.out.println("listeENCHERETRIEES ench= " + listeEnchereTriee.toString());
 		return listeEnchereTriee;
 	}
 	
@@ -252,7 +252,7 @@ public ArticleManager articleManager;
 		List<Article> listeAEnvoyer = new ArrayList<Article>();
 		System.out.println("article MANAGER filtreArticles");
 		System.out.println("idCAT "+ idCat + " filtre " + filtre);
-		System.out.println("liste ArticlesTries" + listeEncheresTries.toString());
+		//System.out.println("liste ArticlesTries" + listeEncheresTries.toString());
 		if (idCat != 0 && filtre != null || filtre != "") {
 			System.out.println("1ere boucle id cat !0 filtre !null" );
 			if (idCat!=0 && filtre == null || filtre =="") {
@@ -265,8 +265,8 @@ public ArticleManager articleManager;
 					}
 		
 				}
-				System.out.println("listeArticleTries "+ listeEncheresTries);
-				System.out.println("listeAEnvoyer" + listeAEnvoyer.toString());
+				//System.out.println("listeArticleTries "+ listeEncheresTries);
+				//System.out.println("listeAEnvoyer" + listeAEnvoyer.toString());
 				System.out.println("*************FIN articleMANAGER************************");
 			} else if (idCat==0 && (filtre != null || filtre != "")) {
 				for (Article article : listeEncheresTries) {
@@ -296,8 +296,8 @@ public ArticleManager articleManager;
 			
 			listeAEnvoyer = listeEncheresTries;
 			System.out.println("1ere boucle id cat 0 filtre null donc tout" );
-		System.out.println("listeArticleTries "+ listeEncheresTries);
-		System.out.println("listeAEnvoyer" + listeAEnvoyer.toString());
+		//System.out.println("listeArticleTries "+ listeEncheresTries);
+		//System.out.println("listeAEnvoyer" + listeAEnvoyer.toString());
 		System.out.println("*************FIN articleMANAGER************************");
 		
 			

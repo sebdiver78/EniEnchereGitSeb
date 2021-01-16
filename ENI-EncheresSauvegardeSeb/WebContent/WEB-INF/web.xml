@@ -6,7 +6,7 @@
 
 <filter>
 	<filter-name>FilterConnexion</filter-name>
-	<filter-class>fr.eni.enchere.servlets.FilterConnexion</filter-class>
+	<filter-class>fr.eni.enchere.filter.FilterConnexion</filter-class>
 </filter>
 <filter-mapping>
 	<filter-name>FilterConnexion</filter-name>

@@ -26,7 +26,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO{
 	private static final String SELECT_ENCHERE_BY_ARTICLE = "SELECT e.idUserEnchere,e.date, e.MAX(montant), u.pseudo" +
 															"FROM ENCHERES e  INNER JOIN ON USERS u WHERE u.idUser = e.idUserEnchere"+
 															"AND idArticle = ? ";
-	private static final String GET_ARTICLE_BY_ID = "SELECT a.idArticle, a.nom, a.description, c.libelle, a.prix_vente, a.prix_initial, a.date_debut, a.date_fin,"+
+	private static final String GET_ARTICLE_BY_ID = "SELECT a.idArticle, a.nom, a.description, a.idCategorie, c.libelle, a.prix_vente, a.prix_initial, a.date_debut, a.date_fin,"+
 															"r.rue, r.code_postal, r.ville, a.idUserArticle, u.pseudo, u.telephone, "+
 															"e.idUserEnchere "+	
 															"FROM ARTICLES a INNER JOIN  RETRAITS r ON r.idRetrait = a.idRetrait "+
@@ -210,6 +210,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO{
 				
 				article = new Article();
 				article.setIdArticle(rs.getInt("idArticle"));
+				article.setIdCategorie(rs.getInt("idCategorie"));
 				article.setNomArticle(rs.getString("nom"));
 				article.setDescriptionArticle(rs.getString("description"));
 				article.setMiseAPrix(rs.getInt("prix_initial"));
@@ -227,6 +228,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO{
 				utilisateur.setTelephone(rs.getString("telephone"));
 				categorie.setLibelle(rs.getString("libelle"));
 				
+				enchere.setNoUtilisateur(rs.getInt("idUserEnchere"));
 				
 				article.setUtilisateur(utilisateur);
 				article.setRetrait(retrait);

@@ -89,7 +89,7 @@ public class ServletTri extends HttpServlet {
 		if (valeurRadio.equals("ventes")) {
 		listeArticlesTriees = articleManager.listeArticlesPourTriBouton(valeurBouton, utilisateurSession);
 		System.out.println("***********SERVLET TRI VENTES**********");
-		System.out.println("liste Article triee " + listeArticlesTriees.toString());
+		//System.out.println("liste Article triee " + listeArticlesTriees.toString());
 		//si bouton encheres  on va ds enchereManager methode qui renvoie 
 		//1 des 3 liste d'enchères
 		//à filtre
@@ -98,9 +98,9 @@ public class ServletTri extends HttpServlet {
 		//1 des 3 liste d'articles à filtrer
 		
 		//retour une liste qui portera le meme nom pour article et enchere
-		
+		request.setAttribute("valeurBouton", valeurRadio);
 		listeAEnvoyer = articleManager.filtreArticles(idCat, filtre, listeArticlesTriees);
-		System.out.println("listeAEnvoyer" + listeAEnvoyer.toString());
+		//System.out.println("listeAEnvoyer" + listeAEnvoyer.toString());
 		request.setAttribute("listeArticles", listeAEnvoyer);
 		} else if (valeurRadio.equals("encheres")) {
 			System.out.println("---SERVLET TRI ACHAT----");
@@ -110,7 +110,7 @@ public class ServletTri extends HttpServlet {
 			listeEncheresTriees = listeEncheresProv;
 			//listeEncheresTriees = enchereManager.retourneListeConv(listeEncheresProv);
 			System.out.println("***********SERVLET TRI ACHAT SUITE FILTRE**********");
-		
+			request.setAttribute("valeurBouton", valeurRadio);
 			System.out.println("listeAEnvoyer" + listeEncheresTriees.toString());
 			request.setAttribute("listeArticles", listeEncheresTriees);
 		}

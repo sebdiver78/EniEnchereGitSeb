@@ -92,13 +92,6 @@ public class ServletActionArticle extends HttpServlet {
 					listeArticlesConnection = articleManager.listeTousLesArticlesConnection(utilisateurSession);
 					request.setAttribute("listeArticles", listeArticlesConnection);
 					
-					//Categories categorie = new Categories();
-					//List<Categories> listeCategories = new ArrayList<>();
-					
-					//ArticleManager articleManagerCat = new ArticleManager();
-					//listeCategories = articleManagerCat.selectLibelleCategorie();
-					//request.setAttribute("listeCategories", listeCategories);
-					
 					System.out.println("**********SERVLET ACCUEIL SESSION****");
 					System.out.println("Credit USERSESSION" + utilisateurSession.getCredit());
 				

@@ -27,7 +27,8 @@ import fr.eni.enchere.bo.Utilisateur;
 @WebServlet(
 		urlPatterns= {
 				"/Annuler",
-				"/VendreUnArticle"
+				"/VendreUnArticle",
+				"/Consultation"
 				
 		})
 public class ServletVendreUnArticle extends HttpServlet {
@@ -45,18 +46,42 @@ public class ServletVendreUnArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getServletPath().contentEquals("/VendreUnArticle")) {
+		
+			int idArticle=0;
+			//recupere l'ID de l'article passé en parametre ds l'url
+			if (request.getParameter("id") != null) {
+				idArticle = Integer.parseInt(request.getParameter("id"));
+			}
 			
-			//recup libelle categorieBDD
-			//Categories categorie = new Categories();
-			//List<Categories> listeCategories = new ArrayList<>();
-			//ArticleManager articleManager = new ArticleManager();
-			//listeCategories = articleManager.selectLibelleCategorie();
-			//request.setAttribute("listeCategories", listeCategories);
-					
-		RequestDispatcher rd = request.getRequestDispatcher("/restreint/NouvelleVente.jsp");
-		rd.forward(request, response);
-		} else if (request.getServletPath().contentEquals("/Annuler")) {
+			if (request.getServletPath().contentEquals("/Consultation")) {
+			//recupere toutes les données de l'article choisi
+			Article articleAffichage = new Article();
+			ArticleManager articleManager = new ArticleManager();
+			articleAffichage = articleManager.selectArticleById(idArticle);
+			System.out.println("articleAffichage "+articleAffichage.toString());
+			//si la date de fin d'enchère est déjà passée, renvoie sur enchere.jsp avec les modifs d'affichage
+			if (articleAffichage.getDateFinEnchere().compareTo(LocalDate.now())<1 ) {
+				System.out.println("VENTE TERMINEE");
+				request.setAttribute("articleAffichage", articleAffichage);
+				RequestDispatcher rd = request.getRequestDispatcher("/restreint/enchere.jsp");
+				rd.forward(request, response);
+			}  else {
+				//met l'articleAffichage en requete pour recuperer sur nouvellevente.jsp
+				request.setAttribute("articleAffichage", articleAffichage);
+				RequestDispatcher rd = request.getRequestDispatcher("/restreint/NouvelleVente.jsp");
+				rd.forward(request, response);
+			}
+			
+		
+		} else if (request.getServletPath().contentEquals("/VendreUnArticle")) {
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/restreint/NouvelleVente.jsp");
+			rd.forward(request, response);
+			
+			
+			
+			
+		}	else if (request.getServletPath().contentEquals("/Annuler")) {
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/AccueilSession");
 			rd.forward(request, response);

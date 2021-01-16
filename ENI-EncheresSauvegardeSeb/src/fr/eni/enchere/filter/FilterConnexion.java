@@ -1,4 +1,4 @@
-package fr.eni.enchere.servlets;
+package fr.eni.enchere.filter;
 
 import java.io.IOException;
 
