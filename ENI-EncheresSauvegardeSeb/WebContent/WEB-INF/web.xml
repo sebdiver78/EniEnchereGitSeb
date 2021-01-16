@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Enchere</display-name>
+   
+ 
+
+<filter>
+	<filter-name>FilterConnexion</filter-name>
+	<filter-class>fr.eni.enchere.servlets.FilterConnexion</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>FilterConnexion</filter-name>
+	<url-pattern>/restreint/*</url-pattern>
+</filter-mapping>
+
+
+  
+</web-app>
