@@ -1,140 +1,103 @@
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!doctype html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Session</title>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Pour rÃ©cupÃ©rer le fichier css  -->
+	<style><%@include file="../../styleCss/style.css"%></style> 
+	<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/styleCss/style.css" /> --%> 
 
-<!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="css1/styleAcceuil.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link type ="text/css" rel="stylesheet" href="/css1/styleAcceuil.css" />
-</head>
-<body>
-		  <div class="container">
+    					<title>ENI-EnchÃ¨res Session</title>
+  </head>
+  <body> 
+    <div class="container">
         <div class="row">
-            <div class="col-sm-8">
-                <h1>ENI-Enchères</h1>     
-            </div>
-            <div class="col-sm-4"> 
-            	<a href="Encheres">Enchères</a>
-            	<a href="${pageContext.request.contextPath}/Profil?id=${sessionScope.sessionUtilisateur.noUtilisateur}">Mon profil</a>
-               	<a href="VendreUnArticle">Vendre un article</a>
-               	<a href="Deconnexion">Se déconnecter</a>
-            </div>
-            <p>Bienvenue ${sessionScope.sessionUtilisateur.prenom} ${sessionScope.sessionUtilisateur.nom}</p>
-            <p>Crédit disponible : ${sessionScope.sessionUtilisateur.credit }</p>
+             <div class="col-sm-6">
+                <a href="<%=request.getContextPath() %>/AccueilSession"><img id="logo-encheres" src="./images/logo-eni-encheres.png" alt="photo ici"></a>
+           	 </div> 
+	     	 <div class="col-sm-6" style="margin-top: 20px; margin-bottom: 20px"> 
+	         	<a href="<%=request.getContextPath() %>#">EnchÃ¨res</a>
+			 	<a href="<%=request.getContextPath() %>/VendreUnArticle">Vendre un article</a>
+	       	 	<a href="${pageContext.request.contextPath}/Profil?id=${sessionScope.sessionUtilisateur.noUtilisateur}">Mon profil</a>
+			 	<a href="<%=request.getContextPath() %>/Connexion">DÃ©connexion</a> 
+	         </div>
         </div>
-    </div>
-         
-
-	
-	
-
-
-
- <div class="col-sm-12">
-        <h2>Liste des enchères</h2>    
-           
-    </div>
-            
-      <div class="container">
-          <div class="row">
-          <form action="triSession" method ="post">
-            <h4 id="filtre">Filtres :</h4>  
-            <div class="col-6">
-                <div id="input" class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">?</span>
-                  <input type="text" id="filtre" name = "filtre" class="form-control" placeholder="Le nom de l'article contient" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-              <br>
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-sm-6">
-                          <h4>Catégorie:</h4>
-                        </div>
-
-                        <div class="col-sm-6">
-                          <select name="idCat" id="idCat" value="1" class="form-select" aria-label="Default select example">
-                              <option value="0">Toutes</option>
-                              <c:forEach var="cat" items="${listeCategories}">
-		
-		
-				
-							<c:set var="idCat" value="${cat.idCategorie }"/>
-							<option value ="<c:out value="${cat.idCategorie}" />">${cat.libelle}</a> </option>
-							</c:forEach>
-                            </select>
-                        </div>
-                        <!--  par défaut, case encheres ouvertes selectionnée -->
-                        <!-- j'ai mis des boutons radios et pas checkbox car pas le temps de gérer les différentes requêtes -->
-                        <!--  pouvant être choises avec les choix mutilples des checkbox -->
-                        
-							<fieldset>
-								<legend>
-								<label for="achats">Achats</label>
-								<input type="radio" id="achats" name="liste" value="encheres" checked />
-								</legend>
-							<label for="enchereOuverte">Encheres ouvertes</label>                        
-                        	<input type="radio" id="enchereOuverte"  name="achatEnchere" value="ouverte" checked/>
-                        	
-                        	<label for="enchereEnCours">Encheres en cours</label>                        
-                        	<input type="radio" id="enchereEnCours" name="achatEnchere" value="enchereEnCours"/>
-                        	
-                        	<label for="enchereRemporte">Encheres remportées</label>                        
-                        	<input type="radio" id="enchereOuverte" name="achatEnchere" value="remportees"/>
-                        								
-							</fieldset>                 
-							
-							<fieldset>
-								<legend>
-								<label for="ventes">Ventes</label>
-								<input type="radio" id="ventes" name="liste" value="ventes"/>
-								
-								</legend>
-							<label for="venteEnCours">Ventes en cours</label>                        
-                        	<input type="radio" id="ventesEnCours" name="achatEnchere" value="ventesEnCours"/>
-                        	
-                        	<label for="ventesNonDebutees">Ventes non débutées</label>                        
-                        	<input type="radio" id="ventesNonDebutees" name="achatEnchere" value="nonDebutees"/>
-                        	
-                        	<label for="ventesTerminées">Ventes terminées</label>                        
-                        	<input type="radio" id="ventesTerminees" name="achatEnchere" value="terminees"/>
-                        
-							</fieldset>       
-							
-                        	
-                    </div>
-                </div>
-            
-            </div>
-              
-            <div class="col-sm-6">
-             <!--<button id="rechercher" type="button" class="btn btn-outline-primary btn-lg">Rechercher</button>  --> 
-            <button id="rechercher"  type="button" class="btn btn-outline-primary btn-lg"><input type="submit" value="Rechercher" name="rechercher" id="rechercher" /></button> 
-            </div>
-            </form>
+        <p>Bonjour ${sessionScope.sessionUtilisateur.prenom} ${sessionScope.sessionUtilisateur.nom}</p>
+       	<p>CrÃ©dit disponible : ${sessionScope.sessionUtilisateur.credit }</p>
+		<h2 style="text-align: center;">Liste des enchÃ¨res</h2>
+		<form action="tri" method ="post">
+        <div class="row">
+          <h4 id="filtre">Filtres :</h4>  
+          <div class="col-6">
+              <div id="input" class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">?</span>
+                <input type="text" id="filtre" name = "filtre" class="form-control" placeholder="Le nom de l'article contient" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+        	  <br>
+              <div class="row">
+                 <div class="col-sm-6">
+                   <h4>CatÃ©gorie:</h4>
+                 </div>
+                 <div class="col-sm-6">
+                    <select name="idCat" id="idCat" value="1" class="form-select" aria-label="Default select example">
+                       <option value="0">Toutes</option>
+                       <c:forEach var="cat" items="${listeCategories}">
+                       <c:set var="idCat" value="${cat.idCategorie }"/>
+				  	   <option value ="<c:out value="${cat.idCategorie}" />">${cat.libelle}</option>
+					   </c:forEach>
+                    </select>
+                 </div>
+              </div>
+   		  </div>
+          <div class="col-sm-6">
+	         <a href="<%=request.getContextPath() %>/AccueilSession">
+	           <button id="creer" type="submit" class="btn btn-outline-primary btn-lg" style="margin-left: 120px; margin-top: 20px;">Rechercher</button>
+	         </a>
           </div>
-        
-		         
-          
- 
-          
-          <div>
- 			
-
-	<c:set var="i" value="${1}"/>
-		<c:forEach var="art" items="${listeArticles}"  >
-		
-		
-		<li>
-		
-		 <!-- JSTL qui permet dans le même affichage d'afficher plusieurs versions différentes des boutons et fonctionnalités -->   
-		<%--quand bouton achats selectionné renvoie sur feuille enchere.jsp  --%>
+        </div>
+	    <div class="container">  
+	    	<div class="row">
+				<div class="col-sm-3" style="margin-top: 20px;margin-left: 25px">
+					<input type="radio" id="achats" value="achats" name="choix"checked>Achats
+					<br>
+					<input type="checkbox" style="margin-left: 30px" value="encheres ouvertes" checked>enchÃ¨res ouvertes
+					<br>
+					<input type="checkbox" style="margin-left: 30px" value="mes encheres en cours">mes enchÃ¨res en cours
+					<br>
+					<input type="checkbox" style="margin-left: 30px" value="mes encheres remportÃ©es">mes enchÃ¨res remportÃ©es
+				</div>
+				<br>
+				<div class="col-sm-4" style="margin-top: 20px;margin-left: 20px">
+					<input type="radio" value="ventes" name="choix" >Mes ventes
+					<br>
+					<input type="checkbox" style="margin-left: 30px" value="mes ventes en cours">mes ventes en cours
+					<br>
+					<input type="checkbox" style="margin-left: 30px" value="ventes non dÃ©butÃ©es">ventes non dÃ©butÃ©es
+					<br>
+					<input type="checkbox" style="margin-left: 30px" value="ventes terminÃ©es">ventes terminÃ©es
+				</div>
+			</div>
+		</div>
+    	<br>
+    	
+    	
+    	<!-- A VOIR -->
+    	<p style="text-align: center;"> Il y a ${listeArticles.size()} objets en vente</p>
+    
+        <div class="col-md-6">
+          	<c:set var="i" value="${1}"/>
+			<c:forEach var="art" items="${listeArticles}"  >
+		 <!-- JSTL qui permet dans le mÃªme affichage d'afficher plusieurs versions diffÃ©rentes des boutons et fonctionnalitÃ©s -->   
+		<%--quand bouton achats selectionnÃ© renvoie sur feuille enchere.jsp  --%>
 			<c:if test="${valeurBouton eq 'encheres' }">
 				<a href="ActionArticle?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a>
 			</c:if>
@@ -142,38 +105,33 @@
 			<c:if test="${valeurBouton eq 'ventes' }">
 				<a href="Consultation?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a>
 			</c:if>
-			
 		<%--<a href="ActionArticle?id=${art.idArticle}"><h2>${art.nomArticle}</h2> </a> --%>
-		<p>Prix : ${art.prixVente} points</p>
-		<p>Fin de l'enchère : ${art.dateFinEnchere}</p>
-		<p>idUser Article : ${art.idUser }</p> 
+			<p>Prix : ${art.prixVente} points</p>
+			<p>Fin de l'enchÃ¨re : ${art.dateFinEnchere}</p>
+			<p>idUser Article : ${art.idUser }</p> 
 		
-		<c:set var="idUser" value="${art.idUser}"/>
-		<!-- boucle qui permet de récupere le pseudo du vendeur de l'objet -->
+			<c:set var="idUser" value="${art.idUser}"/>
+		<!-- boucle qui permet de rÃ©cupere le pseudo du vendeur de l'objet -->
 			<c:forEach var="id" items="${listeIdPseudo}">
 					<c:if test="${art.idUser == id.noUtilisateur}">
 						<c:set var="pseudo" value="${id.pseudo }"/>
 					</c:if>
 			</c:forEach>
-		
 		<p> Vendeur : <a href="ProfilUser?id=${art.idUser}">${pseudo}</a></p>
 		<br/>
 		<c:set var="i" value="${i +1 }"/>
 		</c:forEach>
-          	</li>	
-          	</ul>
-          </div>
         </div>
+    	</form>
+    	
+		<footer>
+			<div class="barblanc"><img id="logo-eni" src="./images/logo-eni.png" alt="photo ici"></div>
+			<div class="barbleu"><p class="nous">RÃ©alisÃ© par Sebastien et Lorris</p></div>
+		</footer>
+		
+	</div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-    -->
   </body>
 </html>

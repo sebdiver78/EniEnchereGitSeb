@@ -25,7 +25,7 @@ import fr.eni.enchere.bo.Utilisateur;
  */
 @WebServlet(
 		urlPatterns= {
-				"/",
+				"",
 				"/rechercher"
 				
 		})
@@ -36,7 +36,7 @@ public class ServletAccueil extends HttpServlet {
    
 	@Override
 	public void init() throws ServletException {
-		//chargement liste catégorie dans le contexte d'application
+		//chargement liste catï¿½gorie dans le contexte d'application
 		Categories categorie = new Categories();
 		List<Categories> listeCategories = new ArrayList<>();
 		ArticleManager articleManagerCat = new ArticleManager();
@@ -80,7 +80,7 @@ public class ServletAccueil extends HttpServlet {
 		
 		//1ere connection sans cookie
 			
-		if (request.getServletPath().equals("/")) { 
+		if (request.getServletPath().equals("")) { 
 			
 			
 			//1er verifie cookie
@@ -88,7 +88,7 @@ public class ServletAccueil extends HttpServlet {
 			int idCookie =0;		
 		
 			//ACCUEIL
-			// si (tableau cookie vide car dossier cookie vidés par user) {
+			// si (tableau cookie vide car dossier cookie vidÃ©s par user) {
 			if (cookies == null) {
 					System.out.println("******condition cookie null*****");
 				//affichage accueil normal
@@ -119,7 +119,7 @@ public class ServletAccueil extends HttpServlet {
 					
 					System.out.println("tableau cookies : "+ c.getName().toString());
 								if (c.getName().equals("cookieUser")) {
-									//on met dans la liste le cookie nommée cookieUser
+									//on met dans la liste le cookie nommï¿½e cookieUser
 									//il n'y en a qu'un
 									listeCookies.add(c);
 									
@@ -128,9 +128,9 @@ public class ServletAccueil extends HttpServlet {
 						
 							}//fin boucle FOR
 						
-							//si la liste n'est pas vide, on récupère le seul et 1er cookie	
+							//si la liste n'est pas vide, on rÃ©cupÃ©re le seul et 1er cookie	
 							if (!listeCookies.isEmpty()) {
-							System.out.println("Cookie user trouvé");
+							System.out.println("Cookie user trouvÃ©");
 							
 							
 							cookieUser = listeCookies.get(0);
@@ -138,9 +138,9 @@ public class ServletAccueil extends HttpServlet {
 							
 								System.out.println("IdCookie ="+ idCookie);	
 								UtilisateurManager utilisateurManager = new UtilisateurManager();
-								//on recupere en BDD l'utilisateur qui a l'id enregistré dans le cookie
+								//on recupere en BDD l'utilisateur qui a l'id enregistrï¿½ dans le cookie
 								userSession = utilisateurManager.selectUtilisateurId(idCookie);
-								//on passe en attribut de session l'objet utilisateur récupéré
+								//on passe en attribut de session l'objet utilisateur rï¿½cupï¿½rï¿½
 								session.setAttribute("sessionUtilisateur", userSession);
 								request.setAttribute("sessionUtilisateur", userSession);
 							
@@ -156,7 +156,7 @@ public class ServletAccueil extends HttpServlet {
 								listeArticles = articleManager.listeTousLesArticles();
 								System.out.println("ServletAccueil ListeArticle = "+ listeArticles.toString());
 								request.setAttribute("listeArticles", listeArticles);
-								System.out.println("***FIN condition cookieUSer trouvé");
+								System.out.println("***FIN condition cookieUSer trouvï¿½");
 								System.out.println("VERS AccueilSession.jsp");
 							
 								
